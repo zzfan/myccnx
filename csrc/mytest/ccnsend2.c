@@ -159,7 +159,7 @@ int main(int argc, char **argv)
     char *output = malloc(100);
     struct ccn_charbuf *templ;
     torepo = 1; //flag标志位，torepo为1表明系统输出要输出到repositary中
-    char *statusUrl = "ccnx:/server5"; //repository输出路径
+    char *statusUrl = "ccnx:/server"; //repository输出路径
     name = ccn_charbuf_create();
     res = ccn_name_from_uri(name, statusUrl);
 
