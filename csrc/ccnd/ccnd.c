@@ -1547,7 +1547,9 @@ send_content(struct ccnd_handle *h, struct face *face, struct content_entry *con
     }
     size = content->size;
     if (h->debug & 4)
+    {
         ccnd_debug_content(h, __LINE__, "content_to", face, content);
+    }
     stuff_and_send(h, face, content->ccnb, size, NULL, 0, 0, 0);
     ccnd_meter_bump(h, face->meter[FM_DATO], 1);
     h->content_items_sent += 1;

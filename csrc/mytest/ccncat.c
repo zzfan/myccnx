@@ -147,7 +147,9 @@ main(int argc, char **argv)
         }
         while ((res = ccn_fetch_read(stream, buf, sizeof(buf))) != 0) {
             if (res > 0) {
-                fwrite(buf, res, 1, stdout);
+                FILE * fp;
+                fp = fopen("output", "ab");
+                fwrite(buf, res, 1, fp);
             } else if (res == CCN_FETCH_READ_NONE) {
                 fflush(stdout);
                 if (ccn_run(ccn, 1000) < 0) {

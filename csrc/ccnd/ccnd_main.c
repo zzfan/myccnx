@@ -39,7 +39,6 @@ int
 main(int argc, char **argv)
 {
     struct ccnd_handle *h;
-    
     if (argc > 1) {
         fprintf(stderr, "%s", ccnd_usage_message);
         exit(1);

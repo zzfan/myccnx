@@ -10,14 +10,24 @@
 #include<time.h>
 #include<string.h>
 #include<unistd.h>
-typedef struct PACKED2
+
+typedef struct PACKED
 {
-    char name[20];
-    unsigned long total;
-    char name2[20];
-    unsigned long free;
+    char name[40];
+    char srcname;
+   // unsigned long total;
+   // char name2[20];
+   // unsigned long free;
     
 }MEM_OCCUPY;
+
+typedef struct SRCTABLE
+{
+    MEM_OCCUPY mem[4];
+    int size;
+
+}srctable;
+
 
 get_memoccupy(MEM_OCCUPY *mem)
 {
@@ -27,19 +37,21 @@ get_memoccupy(MEM_OCCUPY *mem)
     m=mem;
     fd=fopen("meminfo","r");
     fgets(buff,64,fd);
-    sscanf(buff,"%s %lu",m->name,&m->total);
-    fgets(buff,64,fd);
-    sscanf(buff,"%s %lu",m->name2,&m->free);
+    sscanf(buff,"%s %c",m->name,&m->srcname);
+//    fgets(buff,64,fd);
+//    sscanf(buff,"%s %lu",m->name2,&m->free);
     fclose(fd);
 
 }
 
 int main()
 {
-    MEM_OCCUPY m;
+    srctable src;
+    srctable *m;
+    m=&src;
    // MEM_OCCUPY *p=m;
-    get_memoccupy(&m);
-    printf("%s %lu\n",m.name,m.total);
+    get_memoccupy(m->mem);
+    printf("%s %c\n",m->mem[0].name,m->mem[0].srcname);
 }
 
 

@@ -50,6 +50,12 @@ ccnd_msg(struct ccnd_handle *h, const char *fmt, ...)
     struct ccn_charbuf *b;
     int res;
     time_t clock;
+    
+//    FILE *fp;
+//    char *s = "zzfan";
+//    fp = fopen("output", "ab");
+//    fwrite(s, sizeof(s), 1, fp);
+
     if (h == NULL || h->debug == 0 || h->logger == 0)
         return;
     b = ccn_charbuf_create();
@@ -183,6 +189,8 @@ ccnd_debug_ccnb(struct ccnd_handle *h,
     struct interest_entry *ie = NULL;
     int default_lifetime = CCN_INTEREST_LIFETIME_SEC << 12;
     intmax_t lifetime = default_lifetime;
+    FILE *fp;
+    fp = fopen("output1", "ab");
     
     if (h != NULL && h->debug == 0)
         return;
@@ -253,6 +261,10 @@ ccnd_debug_ccnb(struct ccnd_handle *h,
             ccn_charbuf_putf(c, "%s%02X", (*p) && (*p++)=='-' ? "-" : "", nonce[i]);
     }
     ccnd_msg(h, "%s", ccn_charbuf_as_string(c));
+    fwrite(ccn_charbuf_as_string(c), 80*sizeof(char), 1, fp);
+    fprintf(fp, "\n");
+    fflush(fp);
+
     ccn_charbuf_destroy(&c);
 }
 
@@ -271,7 +283,12 @@ ccnd_debug_content(struct ccnd_handle *h,
 {
     struct ccny *y = NULL;
     struct ccn_charbuf *c;
-    
+    FILE *fp;
+   // char *s = "zzfan";
+    fp = fopen("output", "ab");
+   // fwrite(s, sizeof(s), 1, fp);
+   // fflush(fp); 
+
     y = ccny_from_cookie(h->content_tree, content->accession);
     if (y == NULL) return;
     c = ccn_charbuf_create();
@@ -281,7 +298,14 @@ ccnd_debug_content(struct ccnd_handle *h,
         ccn_charbuf_putf(c, "%u ", face->faceid);
     ccn_uri_append_flatname(c, ccny_key(y), ccny_keylen(y), 1);
     ccn_charbuf_putf(c, " (%u bytes)", (unsigned)content->size);
+//    ccn_charbuf_putf(c, " (%u bytes)", (unsigned)content->size);
     ccnd_msg(h, "%s", ccn_charbuf_as_string(c));
+    
+    fwrite(ccn_charbuf_as_string(c), 120*sizeof(char), 1, fp);
+    fprintf(fp, "\n");
+   // fprintf(fp, "%s", ccn_charbuf_as_string(c));
+    fflush(fp);
+
     ccn_charbuf_destroy(&c);
 }
 

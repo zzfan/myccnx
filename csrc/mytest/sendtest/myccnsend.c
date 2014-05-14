@@ -57,7 +57,7 @@ int main(int argc,char **argv)
     struct ccn_charbuf *templ;
     char *output = "hello my send";
     torepo=1;
-    char *statusUrl="ccnx:/server2";
+    char *statusUrl="ccnx:/server";
     name = ccn_charbuf_create();
     res = ccn_name_from_uri(name,statusUrl);
 

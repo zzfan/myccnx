@@ -29,7 +29,6 @@ done
 
 # Set temporary multicast face
 ccndc -t 10 add "/local/ndn" udp  224.0.23.170 59695 
-
 # Get info from local hub, if available
 info=`ccncat -s 2 /local/ndn/udp`
 if [ "x$info" = "x" ]; then
