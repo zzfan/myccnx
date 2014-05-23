@@ -28,11 +28,14 @@ int get_memoccupy(srctable *mem)
     FILE *fd;
     char buff[256];
     int i;
+    int len;
     srctable *m;
     m=mem;
     fd=fopen("meminfo", "r");
     for(i=0; i < 4; i++){
         fgets(buff, 64, fd);
+        len = strlen(buff);
+        printf("%c", buff[len-1]);
         sscanf(buff, "%s %c", m->mem[i].name, &m->mem[i].srcname);
     }
    // fgets(buff, 64, fd);
